@@ -62,7 +62,4 @@ public class ArtistController {
 		return "detail";
 	}
 	
-	public String aiueo() {
-		
-	}
 }
