@@ -61,9 +61,7 @@ public class ArtistController {
 		model.addAttribute("artist",artist);
 		return "detail";
 	}
-	public String aaaa() {
-		
-	}
+	
 	
 	
 }
