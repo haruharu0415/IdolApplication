@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/app.css}" rel="stylesheet" />
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}" defer></script>
+	<script th:src="@{/js/app.js}" defer></script>
+	<title>$title$</title>
+</head>
+
+<body>
+	<table border="1" class="table">
+		<tr>
+			<th>アーティスト名</th>
+			<th>アーティスト名(読み)</th>
+			<th>公式HP</th>
+			<th>詳細</th>
+			<th>削除</th>
+		</tr>
+		<tr th:each="artist: ${artists}">
+			<td th:text="${artist.artistName}"></td>
+			<td th:text="${artist.artistHiraganaName}"></td>
+			<td><a th:href="@{${artist.artistArtUrl}}" th:text="${artist.artistArtUrl}"></a></td>
+			
+			<td style="text-align: center;">
+			<form method = "post" th:method="get" th:action="@{/artists/{id}/detail(id=*{artist.artistId})}">
+				<input type ="hidden" name="id" th:value="${artist.artistId}"/>
+				<input type ="submit" class="btn btn-secondary" value="詳細"/>
+			</form>
+			</td>
+
+			<td style="text-align: center">
+				<form method="post" th:method="delete" th:action="@{/artists/{id}(id=*{artist.artistId})}">
+					<input type="hidden" name="id" value="${artist.artistId}" />
+					<input type="submit" class="btn btn-secondary" value="削除" />
+				</form>
+			</td>
+			</td>
+		</tr>
+	</table>
+    <form method="get" th:action="@{/artists/registration}">
+        <input type="submit" class="btn btn-secondary" value="新規登録はこちらから" />
+    </form>
+	</div>
+</body>
+
+</html>
