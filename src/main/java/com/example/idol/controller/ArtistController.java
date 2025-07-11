@@ -61,5 +61,6 @@ public class ArtistController {
 		model.addAttribute("artist",artist);
 		return "detail";
 	}
+	//aaa
 	
 }
