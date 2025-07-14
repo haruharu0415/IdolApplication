@@ -26,7 +26,9 @@ public class Artist {
 	private Integer artistId;
 	@NotEmpty
 	private String artistName;
+	@NotEmpty
 	private String artistHiraganaName;
+	@NotEmpty
 	private String artistArtUrl;
 	
 	
