@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/app.css}" rel="stylesheet" />
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}" defer></script>
+	<script th:src="@{/js/app.js}" defer></script>
+<title>Insert title here</title>
+</head>
+<body>
+<table border ="1" class="table">
+	<tr>
+		<th>アーティスト名</th>
+		<th>アーティスト名（読み）</th>
+		<th>誕生日</th>
+		<th>年齢</th>
+		
+	</tr>
+	
+	<tr th:each="member: ${artist.members}">
+		<td th:text="${member.memberName}"></td>
+		<td th:text="${member.memberHiraganaName}"></td>
+		<td th:text="${member.memberBirthday}"></td>
+		<td th:text="${member.getMemberAge()}"></td>
+	</tr>
+</table>
+</body>
+</html>

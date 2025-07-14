@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/app.css}" rel="stylesheet" />
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}" defer></script>
+	<script th:src="@{/js/app.js}" defer></script>
+	<title>$title$</title>
+</head>
+
+	<h1>アーティスト新規登録</h1>
+	<form th:method="post" th:action="@{/artists}" th:object="${artist}">
+	アーティスト名<br>
+	<input type="text" name="artistName"><br/>
+	<div class="fw-bold" th:if="${#fields.hasErrors('artistName')}" 
+	th:errors="*{artistName}" th:errorclass="err" style="color:red"></div>
+	アーティスト名(読み)<br>
+	<input type="text" name="artistHiraganaName"><br/>
+		<div class="fw-bold" th:if="${#fields.hasErrors('artistHiraganaName')}" 
+	th:errors="*{artistHiraganaName}" th:errorclass="err" style="color:red"></div>
+	公式HP<br>
+	<input type="text" name="artistArtUrl"><br/>
+	<div class="fw-bold" th:if="${#fields.hasErrors('artistArtUrl')}" 
+	th:errors="*{artistArtUrl}" th:errorclass="err" style="color:red"></div>
+	<input type = "hidden" name="id" value="${artist.artistId}"><br/>
+		
+	<input type="submit" class = "btn btn-secondary" value="登録" /><br/>
+	</form>
+</body>
+
+</html>
