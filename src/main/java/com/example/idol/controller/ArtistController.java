@@ -46,11 +46,11 @@ public class ArtistController {
 	}
 	
 	@PostMapping("/artists")
-	public String registerArtist(@ModelAttribute @Validated Artist artists,BindingResult result,Model model) {
+	public String registerArtist(@ModelAttribute @Validated Artist artist,BindingResult result,Model model) {
 		if(result.hasErrors()) {
 			return "registration";
 		}
-		artistService.save(artists);
+		artistService.save(artist);
 		return "redirect:/artists";
 	}
 	

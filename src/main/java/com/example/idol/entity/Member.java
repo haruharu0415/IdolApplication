@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +25,9 @@ public class Member {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer memberId;
 	private Integer artistId;
+	@NotEmpty
 	private String memberName;
+	@NotEmpty
 	private String memberHiraganaName;
 	private LocalDate memberBirthday;
 	private String memberPhoto;
