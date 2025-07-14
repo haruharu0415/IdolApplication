@@ -9,7 +9,7 @@
 	<title>$title$</title>
 </head>
 <h1>アーティスト登録</h1>
-<form method="post" th:action="@{/members}">
+<form method="post" th:action="@{/members}" th:object="${member}">
 	メンバー名<br/>
 	<input type="text" class="form-control" name="memberName"><br/>
 	メンバー名(読み)<br/>
