@@ -9,13 +9,19 @@
 	<title>$title$</title>
 </head>
 <h1>アーティスト登録</h1>
-<form method="post" th:action="@{/members}">
+<form th:method="post" th:action="@{/members}" th:object="${member}">
 	メンバー名<br/>
 	<input type="text" class="form-control" name="memberName"><br/>
+	<div class="fw-bold" th:if="${#fields.hasErrors('memberName')}" 
+	th:errors="*{memberName}" th:errorclass="err" style="color:red"></div>
 	メンバー名(読み)<br/>
 	<input type="text" class="form-control" name="memberHiraganaName"><br/>
+	<div class="fw-bold" th:if="${#fields.hasErrors('memberHiraganaName')}" 
+	th:errors="*{memberHiraganaName}" th:errorclass="err" style="color:red"></div>
 	誕生日<br/>
 	<input type="date" class="form-control" name="memberBirthday"><br/>
+	<div class="form-control" th:if="${#fields.hasErrors('memberBirthday')}" 
+	th:errors="*{memberBirthday}" th:errorclass="err" style="color:red"></div>
 	所属<br/>
 	<select class="form-select" th:field="${member.artistId}">
 		<option value="0"></option>
