@@ -52,5 +52,5 @@ public class MemberController {
 	    model.addAttribute("artists",artists);
 	    return "membersPost";
 	  }
-		//a
+		//aiueo
 }
