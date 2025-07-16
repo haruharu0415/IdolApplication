@@ -38,12 +38,11 @@ public class MemberController {
 	@PostMapping("/members")
 	public String postMember(@ModelAttribute @Validated Member member,BindingResult result,Model model) {
 		if(result.hasErrors()) {
-<<<<<<< HEAD
+
 			return "redirect:/members/membersPost";
-=======
+
 			model.addAttribute("artists",artistService.findAll());
 			return "membersPost";
->>>>>>> 5245d0f7bcb5c1910da2082c6a39134705788cb5
 		}
 		memberService.save(member);
 		return "redirect:/members";
@@ -56,5 +55,5 @@ public class MemberController {
 	    model.addAttribute("artists",artists);
 	    return "membersPost";
 	  }
-		//aiueo
+		
 }
