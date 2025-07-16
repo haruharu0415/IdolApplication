@@ -10,6 +10,7 @@
 	<title>$title$</title>
 </head>
 <h1>アーティスト登録</h1>
+<<<<<<< HEAD
 <form method="post" th:action="@{/members}" th:object=" ${member}">
 	メンバー名<br />
 	<input type="text" class="form-control" name="memberName"><br />
@@ -23,6 +24,16 @@
 	<input type="date" class="form-control" name="memberBirthday"><br />
 
 	所属<br />
+=======
+<form method="post" th:action="@{/members}" th:object="${member}">
+	メンバー名<br/>
+	<input type="text" class="form-control" name="memberName"><br/>
+	メンバー名(読み)<br/>
+	<input type="text" class="form-control" name="memberHiraganaName"><br/>
+	誕生日<br/>
+	<input type="date" class="form-control" name="memberBirthday"><br/>
+	所属<br/>
+>>>>>>> 5245d0f7bcb5c1910da2082c6a39134705788cb5
 	<select class="form-select" th:field="${member.artistId}">
 		<option value="0"></option>
 		<option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
