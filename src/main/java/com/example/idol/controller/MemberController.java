@@ -42,7 +42,7 @@ public class MemberController {
 			return "membersPost";
 		}
 		memberService.save(member);
-		return "redirect:/artists";
+		return "redirect:/members";
 	}
 	
 	@GetMapping("/members/membersPost")
