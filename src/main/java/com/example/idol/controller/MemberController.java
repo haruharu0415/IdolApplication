@@ -38,9 +38,6 @@ public class MemberController {
 	@PostMapping("/members")
 	public String postMember(@ModelAttribute @Validated Member member,BindingResult result,Model model) {
 		if(result.hasErrors()) {
-
-			return "redirect:/members/membersPost";
-
 			model.addAttribute("artists",artistService.findAll());
 			return "membersPost";
 		}
