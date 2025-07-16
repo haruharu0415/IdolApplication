@@ -31,13 +31,18 @@ public class ArtistService {
 		artistRepository.save(artist);
 	}
 	
-	/*public Artist findMemberByArtistId(Integer artistId){
-		Artist artist = artistRepository.findById(artistId).orElse(null);
-		return artist;
-	}*/
+
 	
 	public Artist findById(Integer artistId){
 		return artistRepository.findById(artistId).orElseGet(Artist::new);
 	}
 
+	public void update(Artist artist) {
+		artistRepository.save(artist);
+		
+	}
+
+	
+
+	
 }

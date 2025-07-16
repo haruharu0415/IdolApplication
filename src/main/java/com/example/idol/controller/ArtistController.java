@@ -15,7 +15,6 @@ import com.example.idol.entity.Artist;
 import com.example.idol.service.ArtistService;
 
 
-
 @Controller
 public class ArtistController {
 
@@ -62,6 +61,15 @@ public class ArtistController {
 		return "detail";
 	}
 	
+	@PostMapping("artists/{id}/update")
+    public String update(@ModelAttribute @Validated Artist artist, BindingResult result) {
+		if(result.hasErrors()) {
+			return "update";
+		}
+        artistService.save(artist);
+        return "redirect:/artists"; 
+    }
+
 	
 	
 }

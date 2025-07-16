@@ -10,5 +10,7 @@ import com.example.idol.entity.Artist;
 @Repository
 public interface ArtistRepository extends CrudRepository<Artist, Integer> {
 	public List<Artist> findAll();
+
+
 	
 }

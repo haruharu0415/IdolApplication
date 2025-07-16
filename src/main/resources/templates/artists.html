@@ -37,7 +37,12 @@
 					<input type="submit" class="btn btn-secondary" value="削除" />
 				</form>
 			</td>
-			</td>
+			<td style="text-align: center">
+				<form method="post" th:method="Request" th:action="@{/artists/{id}/update(id=*{artist.artistId})}">
+					<input type="hidden" name="id" value="${artist.artistId}" />
+					<input type="submit" class="btn btn-secondary" value="更新" />
+				</form>
+				</td>
 		</tr>
 	</table>
     <form method="get" th:action="@{/artists/registration}">
