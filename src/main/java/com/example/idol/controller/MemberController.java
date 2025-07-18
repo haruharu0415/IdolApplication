@@ -52,5 +52,9 @@ public class MemberController {
 	    model.addAttribute("artists",artists);
 	    return "membersPost";
 	  }
+	
+	public String git() {
+		return "git";
+	}
 		
 }
