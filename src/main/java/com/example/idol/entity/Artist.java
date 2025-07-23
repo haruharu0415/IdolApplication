@@ -23,6 +23,7 @@ public class Artist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Integer artistId;
 	@NotEmpty
 	private String artistName;

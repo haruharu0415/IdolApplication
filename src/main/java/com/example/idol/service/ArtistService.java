@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.example.idol.entity.Artist;
 import com.example.idol.repository.ArtistRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ArtistService {
 
@@ -31,16 +33,19 @@ public class ArtistService {
 		artistRepository.save(artist);
 	}
 	
-
-	
 	public Artist findById(Integer artistId){
 		return artistRepository.findById(artistId).orElseGet(Artist::new);
 	}
 
-	public void update(Artist artist) {
-		artistRepository.save(artist);
-		
+	@Transactional
+	public Artist updateArtist(Artist update) {
+	   Artist entity = new Artist();
+	    entity.setArtistName(update.getArtistName());
+	    entity.setArtistHiraganaName(update.getArtistHiraganaName());
+	    entity.setArtistArtUrl(update.getArtistArtUrl());
+	    return artistRepository.save(entity);
 	}
+
 
 	
 

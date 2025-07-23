@@ -55,20 +55,27 @@ public class ArtistController {
 	
 	@GetMapping("/artists/{id}/detail")
 	public String getMembers(@PathVariable("id") Integer artistId, Model model) {
-		//var detail = artistService.findMemberByArtistId(artistId);
 		var artist = artistService.findById(artistId);
 		model.addAttribute("artist",artist);
 		return "detail";
 	}
 	
-	@PostMapping("artists/{id}/update")
-    public String update(@ModelAttribute @Validated Artist artist, BindingResult result) {
-		if(result.hasErrors()) {
-			return "update";
-		}
-        artistService.save(artist);
-        return "redirect:/artists"; 
-    }
+	@GetMapping("/artists/{id}/update")
+	public String updateArtist(@PathVariable("id") Integer id, Model model) {
+	    var artist = artistService.findById(id);
+	    model.addAttribute("artist", artist);
+	    return "update";
+	}
+
+	@PostMapping("/artists/{id}/update")
+	public String update(@ModelAttribute("artists") Artist artist,BindingResult result, Model model) {
+	   if(result.hasErrors()) {
+		   return "update";
+	   }
+		artistService.updateArtist(artist);
+	    return "redirect:/artists";
+	}
+
 
 	
 	
