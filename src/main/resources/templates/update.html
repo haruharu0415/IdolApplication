@@ -13,7 +13,7 @@
 <body>
     <h1>アーティスト情報更新</h1>
     <form th:method="post" th:action="@{/artists/{id}/update(id=${artist.id})}" th:object="${artist}">
-        <input type="hidden" th:field="*{artist}" />
+        <input type="hidden" th:field="*{artistId}" />
 
         <div>
             アーティスト名<br>
