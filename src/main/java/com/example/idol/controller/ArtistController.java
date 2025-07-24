@@ -68,7 +68,7 @@ public class ArtistController {
 	}
 
 	@PostMapping("/artists/{id}/update")
-	public String update(@ModelAttribute("artists") Artist artist,BindingResult result, Model model) {
+	public String update(@ModelAttribute("artist")　@Validated Artist artist,BindingResult result, Model model) {
 	   if(result.hasErrors()) {
 		   return "update";
 	   }
