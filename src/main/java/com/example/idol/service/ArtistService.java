@@ -39,17 +39,17 @@ public class ArtistService {
 
 	@Transactional
 	public Artist updateArtist(Artist update) {
-   	 // ① DBから既存のデータを取ってくる
-   	 Artist entity = artistRepository.findById(update.getArtistId())
-       	 .orElseThrow(() -> new IllegalArgumentException("存在しないアーティストです"));
 
-   	 // ② 上書きする
-    	entity.setArtistName(update.getArtistName());
-  	  entity.setArtistHiraganaName(update.getArtistHiraganaName());
-   	 entity.setArtistArtUrl(update.getArtistArtUrl());
-
-    	// ③ 保存（updateとして動く）
-    	return artistRepository.save(entity);
+		//DBからとってくる。
+	   Artist entity = artistRepository.findById(update.getArtistId())
+			   .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
+	   //上書き
+	    entity.setArtistName(update.getArtistName());
+	    entity.setArtistHiraganaName(update.getArtistHiraganaName());
+	    entity.setArtistArtUrl(update.getArtistArtUrl());
+	    
+	    //update
+	    return artistRepository.save(entity);
 	}
 
 	

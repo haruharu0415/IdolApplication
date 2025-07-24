@@ -18,17 +18,18 @@
 			<th>公式HP</th>
 			<th>詳細</th>
 			<th>削除</th>
+			<th>更新</th>
 		</tr>
 		<tr th:each="artist: ${artists}">
 			<td th:text="${artist.artistName}"></td>
 			<td th:text="${artist.artistHiraganaName}"></td>
 			<td><a th:href="@{${artist.artistArtUrl}}" th:text="${artist.artistArtUrl}"></a></td>
-			
+
 			<td style="text-align: center;">
-			<form method = "post" th:method="get" th:action="@{/artists/{id}/detail(id=*{artist.artistId})}">
-				<input type ="hidden" name="id" th:value="${artist.artistId}"/>
-				<input type ="submit" class="btn btn-secondary" value="詳細"/>
-			</form>
+				<form method="post" th:method="get" th:action="@{/artists/{id}/detail(id=*{artist.artistId})}">
+					<input type="hidden" name="id" th:value="${artist.artistId}" />
+					<input type="submit" class="btn btn-secondary" value="詳細" />
+				</form>
 			</td>
 
 			<td style="text-align: center">
@@ -38,16 +39,16 @@
 				</form>
 			</td>
 			<td style="text-align: center">
-				<form method="post" th:method="Request" th:action="@{/artists/{id}/update(id=*{artist.artistId})}">
-					<input type="hidden" name="id" value="${artist.artistId}" />
+				<form th:action="@{/artists/{id}/update(id=${artist.artistId})}" method="get">
 					<input type="submit" class="btn btn-secondary" value="更新" />
 				</form>
-				</td>
+			</td>
+
 		</tr>
 	</table>
-    <form method="get" th:action="@{/artists/registration}">
-        <input type="submit" class="btn btn-secondary" value="新規登録はこちらから" />
-    </form>
+	<form method="get" th:action="@{/artists/registration}">
+		<input type="submit" class="btn btn-secondary" value="新規登録はこちらから" />
+	</form>
 	</div>
 </body>
 

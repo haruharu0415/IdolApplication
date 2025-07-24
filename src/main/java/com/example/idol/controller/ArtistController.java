@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.idol.entity.Artist;
 import com.example.idol.service.ArtistService;
 
-
 @Controller
 public class ArtistController {
 
@@ -33,50 +32,51 @@ public class ArtistController {
 	}
 
 	@DeleteMapping("/artists/{id}")
-	public String delete(@PathVariable("id") Integer artistId){
+	public String delete(@PathVariable("id") Integer artistId) {
 		artistService.delete(artistId);
 		return "redirect:/artists";
 	}
-	
+
 	@GetMapping("/artists/registration")
 	public String registration(Model model) {
 		model.addAttribute(new Artist());
 		return "registration";
 	}
-	
+
 	@PostMapping("/artists")
-	public String registerArtist(@ModelAttribute @Validated Artist artists,BindingResult result,Model model) {
-		if(result.hasErrors()) {
+	public String registerArtist(@ModelAttribute @Validated Artist artists, BindingResult result, Model model) {
+		if (result.hasErrors()) {
 			return "registration";
 		}
 		artistService.save(artists);
 		return "redirect:/artists";
 	}
-	
+
 	@GetMapping("/artists/{id}/detail")
 	public String getMembers(@PathVariable("id") Integer artistId, Model model) {
 		var artist = artistService.findById(artistId);
-		model.addAttribute("artist",artist);
+		model.addAttribute("artist", artist);
 		return "detail";
 	}
-	
+
 	@GetMapping("/artists/{id}/update")
-	public String updateArtist(@PathVariable("id") Integer id, Model model) {
-	    var artist = artistService.findById(id);
-	    model.addAttribute("artist", artist);
-	    return "update";
+	public String updateArtist(@PathVariable("id") Integer artistid, Model model) {
+		var artist = artistService.findById(artistid);
+		model.addAttribute("artist", artist);
+		return "update";
 	}
 
 	@PostMapping("/artists/{id}/update")
-	public String update(@ModelAttribute("artist")　@Validated Artist artist,BindingResult result, Model model) {
-	   if(result.hasErrors()) {
-		   return "update";
-	   }
+	public String update(@PathVariable("id") Integer id, @ModelAttribute("artist") @Validated Artist artist,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "update";
+		}
+
+		artist.setArtistId(id);
 		artistService.updateArtist(artist);
-	    return "redirect:/artists";
+
+		return "redirect:/artists";
 	}
 
-
-	
-	
 }
