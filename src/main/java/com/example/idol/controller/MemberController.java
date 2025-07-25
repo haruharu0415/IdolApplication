@@ -17,61 +17,59 @@ import com.example.idol.service.MemberService;
 @Controller
 public class MemberController {
 
-	private final MemberService memberService;
-	
-	private final ArtistService artistService;
-	
-	@Autowired
-	public MemberController(MemberService memberService,ArtistService artistService) {
-		this.memberService = memberService;
-		this.artistService = artistService;
-	}
-	
-	@GetMapping("/members")
-	public String getMembers(Model model) {
-		var members = memberService.findAll();
-		model.addAttribute("members",members);
-		return "members";
-	}
-	
-	
-	
-	@PostMapping("/members")
-	public String postMember(@ModelAttribute @Validated Member member,BindingResult result,Model model) {
-		if(result.hasErrors()) {
-			model.addAttribute("artists",artistService.findAll());
-			return "membersPost";
-		}
-		memberService.save(member);
-		return "redirect:/members";
-	}
-	
-	@GetMapping("/members/membersPost")
-	  public String post(Model model){
-	    model.addAttribute("member", new Member());  
-	    var artists = artistService.findAll();
-	    model.addAttribute("artists",artists);
-	    return "membersPost";
-	  }
-	
-	@GetMapping("/members/{id}/membersUpdate")
-	public String updateMember(@PathVariable("id") Integer memberid, Model model) {
-		var member = memberService.findById(memberid);
-		model.addAttribute("member", member);
-		return "membersUpdate";
-	}
-	
-	
-	@PostMapping("/members/{id}/membersUpdate")
-	public String update(@PathVariable("id") Integer id, @ModelAttribute("member") @Validated Member member,
-			BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "membersUpdate";
-		}
+    private final MemberService memberService;
+    private final ArtistService artistService;
 
-		member.setMemberId(id);
-		memberService.updateMember(member);
+    @Autowired
+    public MemberController(MemberService memberService, ArtistService artistService) {
+        this.memberService = memberService;
+        this.artistService = artistService;
+    }
 
-		return "redirect:/members";
-	}
+    @GetMapping("/members")
+    public String getMembers(Model model) {
+        var members = memberService.findAll();
+        model.addAttribute("members", members);
+        return "members";
+    }
+
+    @PostMapping("/members")
+    public String postMember(@ModelAttribute @Validated Member member, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("artists", artistService.findAll());
+            return "membersPost";
+        }
+        memberService.save(member);
+        return "redirect:/members";
+    }
+
+    @GetMapping("/members/membersPost")
+    public String post(Model model) {
+        model.addAttribute("member", new Member());
+        var artists = artistService.findAll();
+        model.addAttribute("artists", artists);
+        return "membersPost";
+    }
+
+    @GetMapping("/members/{id}/membersUpdate")
+    public String updateMember(@PathVariable("id") Integer memberid, Model model) {
+        var member = memberService.findById(memberid);
+        model.addAttribute("member", member);
+        model.addAttribute("artists", artistService.findAll());  
+        return "membersUpdate";
+    }
+
+    @PostMapping("/members/{id}/membersUpdate")
+    public String update(@PathVariable("id") Integer id, @ModelAttribute("member") @Validated Member member,
+                         BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("artists", artistService.findAll());
+            return "membersUpdate";
+        }
+
+        member.setMemberId(id);
+        memberService.updateMember(member);
+
+        return "redirect:/members";
+    }
 }

@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="UTF-8">
-	<link th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}" rel="stylesheet" />
-	<link th:href="@{/css/app.css}" rel="stylesheet" />
-	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}" defer></script>
-	<script th:src="@{/js/app.js}" defer></script>
-	<title>メンバー情報更新</title>
+    <meta charset="UTF-8" />
+    <link th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/app.css}" rel="stylesheet" />
+    <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}" defer></script>
+    <script th:src="@{/js/app.js}" defer></script>
+    <title>メンバー情報更新</title>
 </head>
-
 <body>
+    <h1>メンバー更新</h1>
+    <form th:method="post" th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" th:object="${member}">
+        <input type="hidden" th:field="*{memberId}" />
 
-	<h1>メンバー更新</h1>
-	<form th:method="post" th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" th:object="${member}">
-		<input type="hidden" th:field="*{memberId}" />
+        <div>
+            メンバー名<br />
+            <input type="text" th:field="*{memberName}" class="form-control" /><br />
+            <div th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" style="color:red"></div>
+        </div>
 
-		<div>
-			アーティスト名<br>
-			<input type="text" name="memberName" /><br />w
-			<div class="fw-bold" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"
-				th:errorclass="err" style="color:red"></div>
-		</div>
+        <div>
+            メンバー名(読み)<br />
+            <input type="text" th:field="*{memberHiraganaName}" class="form-control" /><br />
+            <div th:if="${#fields.hasErrors('memberHiraganaName')}" th:errors="*{memberHiraganaName}" style="color:red"></div>
+        </div>
 
-		<div>
-			アーティスト名(読み)<br>
-			<input type="text" name="memberHiraganaName" /><br />
-			<div class="fw-bold" th:if="${#fields.hasErrors('memberHiraganaName')}" th:errors="*{memberHiraganaName}"
-				th:errorclass="err" style="color:red"></div>
-		</div>
+        <div>
+            誕生日<br />
+            <input type="date" th:field="*{memberBirthday}" class="form-control" /><br />
+            <div th:if="${#fields.hasErrors('memberBirthday')}" th:errors="*{memberBirthday}" style="color:red"></div>
+        </div>
 
-		<div>
-			公式HP<br>
-			<input type="text" name="memberBithday" /><br />
-			<div class="fw-bold" th:if="${#fields.hasErrors('memberBirthday')}" th:errors="*{memberBithday}"
-				th:errorclass="err" style="color:red"></div>
-		</div>
+        <div>
+            所属グループ<br />
+            <select th:field="*{artistId}" class="form-select">
+                <option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
+            </select>
+        </div>
 
-		<input type="submit" class="btn btn-secondary" value="更新" /><br />
-	</form>
+        <br />
+        <input type="submit" class="btn btn-secondary" value="更新" />
+    </form>
 </body>
-
 </html>
