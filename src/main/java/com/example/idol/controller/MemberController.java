@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.idol.entity.Member;
@@ -53,4 +54,24 @@ public class MemberController {
 	    return "membersPost";
 	  }
 	
+	@GetMapping("/members/{id}/membersUpdate")
+	public String updateMember(@PathVariable("id") Integer memberid, Model model) {
+		var member = memberService.findById(memberid);
+		model.addAttribute("member", member);
+		return "membersUpdate";
+	}
+	
+	
+	@PostMapping("/members/{id}/membersUpdate")
+	public String update(@PathVariable("id") Integer id, @ModelAttribute("member") @Validated Member member,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "membersUpdate";
+		}
+
+		member.setMemberId(id);
+		memberService.updateMember(member);
+
+		return "redirect:/members";
+	}
 }

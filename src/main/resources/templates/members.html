@@ -17,6 +17,7 @@
 		<th>メンバー名（読み）</th>
 		<th>年齢</th>
 		<th>所属グループ名</th>
+		<th>更新</th>
 	</tr>
 	
 		
@@ -25,10 +26,20 @@
 		<td th:text="${member.memberHiraganaName}"></td>
 		<td th:text="${member.getMemberAge()}"></td>
 		<td th:text="${member.artist.artistName}"></td>
+		
+		<td style="text-align: center">
+				<form th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" method="get">
+					<input type="submit" class="btn btn-secondary" value="更新" />
+				</form>
+			</td>
+			
 	</tr>
-	<form method="get" th:action="@{/members/membersPost}">
-        <input type="submit" class="btn btn-secondary" value="新規登録はこちらから" />
+        
 </table>
+
+<form method="get" th:action="@{/members/membersPost}">
+        <input type="submit" class="btn btn-secondary" value="新規登録はこちらから" />
+	</form>  
 </body>
 
 </html>
