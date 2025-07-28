@@ -34,8 +34,9 @@ public class ArtistService {
 	}
 
 	public void save(Artist artist,MultipartFile file) throws IOException {
-		artistRepository.save(artist);
 		Files.write(Paths.get("static/images/" + file.getOriginalFilename()),file.getBytes());
+		artistRepository.save(artist);
+		
 	}
 	
 	public Artist findById(Integer artistId){
