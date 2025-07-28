@@ -1,10 +1,14 @@
 package com.example.idol.service;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.idol.entity.Artist;
 import com.example.idol.repository.ArtistRepository;
@@ -29,8 +33,9 @@ public class ArtistService {
 		artistRepository.deleteById(artistId);
 	}
 
-	public void save(Artist artist) {
+	public void save(Artist artist,MultipartFile file) throws IOException {
 		artistRepository.save(artist);
+		Files.write(Paths.get("static/images/" + file.getOriginalFilename()),file.getBytes());
 	}
 	
 	public Artist findById(Integer artistId){
@@ -51,6 +56,8 @@ public class ArtistService {
 	    //update
 	    return artistRepository.save(entity);
 	}
+	
+	
 
 	
 }
