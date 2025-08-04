@@ -32,9 +32,24 @@ public class ArtistService {
 	public void delete(Integer artistId) {
 		artistRepository.deleteById(artistId);
 	}
+	
+	
+	
+	//同じやつ来たらリネームして保存
+	//01.png
+	//01(1).png
+	//上書きしない
+	//ナビゲーションバー
 
 	public void save(Artist artist,MultipartFile file) throws IOException {
-		Files.write(Paths.get("static/images/" + file.getOriginalFilename()),file.getBytes());
+		//保存先決める
+		String files = "static/images/" + file.getOriginalFilename();
+		//保存する
+		Files.write(Paths.get(files),file.getBytes());
+		//保存先をエンティティに設定
+		//setterを使う
+		artist.setArtistArtUrl("images/" + file.getOriginalFilename());
+		//DBにエンティティを書く
 		artistRepository.save(artist);
 		
 	}

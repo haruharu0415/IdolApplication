@@ -27,6 +27,7 @@
 		<td th:text="${member.getMemberAge()}"></td>
 		<td th:text="${member.artist.artistName}"></td>
 		
+		
 		<td style="text-align: center">
 				<form th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" method="get">
 					<input type="submit" class="btn btn-secondary" value="更新" />

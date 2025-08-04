@@ -13,6 +13,7 @@
 <body>
 	<table border="1" class="table">
 		<tr>
+			<th>アーティスト写真</th>
 			<th>アーティスト名</th>
 			<th>アーティスト名(読み)</th>
 			<th>公式HP</th>
@@ -20,10 +21,16 @@
 			<th>削除</th>
 			<th>更新</th>
 		</tr>
-		<tr th:each="artist: ${artists}">
+		
+		
+		
+		<tr th:each="artist: ${artists}" >
+			<td><img th:src="${artist.artistArtUrl}"width="150" height="50"></td>
 			<td th:text="${artist.artistName}"></td>
 			<td th:text="${artist.artistHiraganaName}"></td>
 			<td><a th:href="@{${artist.artistArtUrl}}" th:text="${artist.artistArtUrl}"></a></td>
+			
+			
 
 			<td style="text-align: center;">
 				<form method="post" th:method="get" th:action="@{/artists/{id}/detail(id=*{artist.artistId})}">
