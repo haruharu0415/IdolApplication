@@ -1,5 +1,7 @@
 package com.example.idol.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.idol.entity.Member;
 import com.example.idol.service.ArtistService;
@@ -34,12 +38,12 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public String postMember(@ModelAttribute @Validated Member member, BindingResult result, Model model) {
+    public String postMember(@ModelAttribute @Validated Member member, BindingResult result,@RequestParam("member_cover") MultipartFile cover, Model model) throws IOException {
         if (result.hasErrors()) {
             model.addAttribute("artists", artistService.findAll());
             return "membersPost";
         }
-        memberService.save(member);
+        memberService.save(member, cover);
         return "redirect:/members";
     }
 

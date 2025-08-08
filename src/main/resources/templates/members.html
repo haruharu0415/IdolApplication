@@ -13,6 +13,7 @@
 <body>
 <table border="1" class="table">
 	<tr>
+		<th>メンバー写真</th>
 		<th>メンバー名</th>
 		<th>メンバー名（読み）</th>
 		<th>年齢</th>
@@ -22,6 +23,7 @@
 	
 		
 	<tr th:each="member: ${members}">
+		<td><img th:src="${member.memberPhoto}"width="150" height="50"</td>
 		<td th:text="${member.memberName}"></td>
 		<td th:text="${member.memberHiraganaName}"></td>
 		<td th:text="${member.getMemberAge()}"></td>

@@ -1,10 +1,14 @@
 package com.example.idol.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.idol.entity.Member;
 import com.example.idol.repository.MemberRepository;
@@ -22,7 +26,10 @@ public class MemberService {
 		return memberRepository.findAll();
 	}
 
-	public void save(Member members) {
+	public void save(Member members,MultipartFile file) throws IOException{
+		String files = "static/images/" + file.getOriginalFilename();
+		Files.write(Paths.get(files),file.getBytes());
+		members.setMemberPhoto("images/" + file.getOriginalFilename());
 		memberRepository.save(members);
 	}
 	
