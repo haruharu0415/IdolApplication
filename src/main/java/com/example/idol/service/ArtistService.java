@@ -42,8 +42,14 @@ public class ArtistService {
 	//ナビゲーションバー
 
 	public void save(Artist artist,MultipartFile file) throws IOException {
+		//while文の条件式が真の間下記の処理が実行される。偽の場合はwhile文を出てほかの処理。
+		
+	
 		//保存先決める
 		String files = "static/images/" + file.getOriginalFilename();
+	while(Files.exists(Paths.get(files))) {
+		
+	}
 		//保存する
 		Files.write(Paths.get(files),file.getBytes());
 		//保存先をエンティティに設定
@@ -51,7 +57,6 @@ public class ArtistService {
 		artist.setArtistArtUrl("images/" + file.getOriginalFilename());
 		//DBにエンティティを書く
 		artistRepository.save(artist);
-		
 	}
 	
 	public Artist findById(Integer artistId){
