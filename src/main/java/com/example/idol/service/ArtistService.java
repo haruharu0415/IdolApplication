@@ -1,6 +1,5 @@
 package com.example.idol.service;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,62 +17,56 @@ import jakarta.transaction.Transactional;
 @Service
 public class ArtistService {
 
-	private final ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository;
 
-	@Autowired
-	public ArtistService(ArtistRepository artistRepository) {
-		this.artistRepository = artistRepository;
-	}
+    @Autowired
+    public ArtistService(ArtistRepository artistRepository) {
+        this.artistRepository = artistRepository;
+    }
 
-	public List<Artist> findAll() {
-		return artistRepository.findAll();
-	}
+    public List<Artist> findAll() {
+        return artistRepository.findAll();
+    }
 
-	public void delete(Integer artistId) {
-		artistRepository.deleteById(artistId);
-	}
-	
-	
-	
-	//同じやつ来たらリネームして保存
-	//01.png
-	//01(1).png
-	//上書きしない
-	//ナビゲーションバー
+    public void delete(Integer artistId) {
+        artistRepository.deleteById(artistId);
+    }
 
-	public void save(Artist artist,MultipartFile file) throws IOException {
-		//保存先決める
-		String files = "static/images/" + file.getOriginalFilename();
-		//保存する
-		Files.write(Paths.get(files),file.getBytes());
-		//保存先をエンティティに設定
-		//setterを使う
-		artist.setArtistArtUrl("images/" + file.getOriginalFilename());
-		//DBにエンティティを書く
-		artistRepository.save(artist);
-		
-	}
-	
-	public Artist findById(Integer artistId){
-		return artistRepository.findById(artistId).orElseGet(Artist::new);
-	}
+    // リネーム処理
+    public void save(Artist artist, MultipartFile file) throws IOException {
+        String uploadDir = "static/images/"; 
 
-	@Transactional
-	public Artist updateArtist(Artist update) {
+        String originalFilename = file.getOriginalFilename();
+        String filename = originalFilename;
 
-		//DBからとってくる。
-	   Artist entity = artistRepository.findById(update.getArtistId())
-			   .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
-	   //上書き
-	    entity.setArtistName(update.getArtistName());
-	    entity.setArtistHiraganaName(update.getArtistHiraganaName());
-	    entity.setArtistArtUrl(update.getArtistArtUrl());
-	    
-	    //update
-	    return artistRepository.save(entity);
-	}
-	
-	
+        int i = 1;
+        while (Files.exists(Paths.get(uploadDir, filename))) {
+            String name = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+            String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+            filename = name + "(" + i + ")" + ext;
+            i++;
+        }
 
-	
+        Files.write(Paths.get(uploadDir, filename), file.getBytes());
+
+        artist.setArtistArtUrl("images/" + filename);
+
+        artistRepository.save(artist);
+    }
+
+    public Artist findById(Integer artistId) {
+        return artistRepository.findById(artistId).orElseGet(Artist::new);
+    }
+
+    @Transactional
+    public Artist updateArtist(Artist update) {
+        Artist entity = artistRepository.findById(update.getArtistId())
+                .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
+
+        entity.setArtistName(update.getArtistName());
+        entity.setArtistHiraganaName(update.getArtistHiraganaName());
+        entity.setArtistArtUrl(update.getArtistArtUrl());
+
+        return artistRepository.save(entity);
+    }
 }
