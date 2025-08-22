@@ -32,7 +32,7 @@ public class ArtistService {
         artistRepository.deleteById(artistId);
     }
 
-    // リネーム処理
+    // 新規登録時の保存
     public void save(Artist artist, MultipartFile file) throws IOException {
         String uploadDir = "static/images/"; 
 
@@ -58,14 +58,34 @@ public class ArtistService {
         return artistRepository.findById(artistId).orElseGet(Artist::new);
     }
 
+    // 更新処理（画像も含めて対応）
     @Transactional
-    public Artist updateArtist(Artist update) {
+    public Artist updateArtist(Artist update, MultipartFile file) throws IOException {
         Artist entity = artistRepository.findById(update.getArtistId())
                 .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
 
         entity.setArtistName(update.getArtistName());
         entity.setArtistHiraganaName(update.getArtistHiraganaName());
-        entity.setArtistArtUrl(update.getArtistArtUrl());
+
+        // ファイルが選択されている場合だけ処理
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = "static/images/"; 
+
+            String originalFilename = file.getOriginalFilename();
+            String filename = originalFilename;
+
+            int i = 1;
+            while (Files.exists(Paths.get(uploadDir, filename))) {
+                String name = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+                String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                filename = name + "(" + i + ")" + ext;
+                i++;
+            }
+
+            Files.write(Paths.get(uploadDir, filename), file.getBytes());
+
+            entity.setArtistArtUrl("images/" + filename);
+        }
 
         return artistRepository.save(entity);
     }
