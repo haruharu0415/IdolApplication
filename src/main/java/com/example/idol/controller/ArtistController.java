@@ -21,69 +21,72 @@ import com.example.idol.service.ArtistService;
 @Controller
 public class ArtistController {
 
-	private final ArtistService artistService;
+    private final ArtistService artistService;
 
-	@Autowired
-	public ArtistController(ArtistService artistService) {
-		this.artistService = artistService;
-	}
+    @Autowired
+    public ArtistController(ArtistService artistService) {
+        this.artistService = artistService;
+    }
 
-	@GetMapping("/artists")
-	public String getArtists(Model model) {
-		var artists = artistService.findAll();
-		model.addAttribute("artists", artists);
-		return "artists";
-	}
+    @GetMapping("/artists")
+    public String getArtists(Model model) {
+        var artists = artistService.findAll();
+        model.addAttribute("artists", artists);
+        return "artists";
+    }
 
-	@DeleteMapping("/artists/{id}")
-	public String delete(@PathVariable("id") Integer artistId) {
-		artistService.delete(artistId);
-		return "redirect:/artists";
-	}
+    @DeleteMapping("/artists/{id}")
+    public String delete(@PathVariable("id") Integer artistId) {
+        artistService.delete(artistId);
+        return "redirect:/artists";
+    }
 
-	@GetMapping("/artists/registration")
-	public String registration(Model model) {
-		model.addAttribute(new Artist());
-		return "registration";
-	}
+    @GetMapping("/artists/registration")
+    public String registration(Model model) {
+        model.addAttribute(new Artist());
+        return "registration";
+    }
 
-	@PostMapping("/artists")
-	public String registerArtist(@ModelAttribute @Validated Artist artists, BindingResult result,@RequestParam("artist_cover") MultipartFile cover, Model model) throws IOException {
-		if (result.hasErrors()) {
-			return "registration";
-		}
-		artistService.save(artists, cover);
-		return "redirect:/artists";
-	}
+    @PostMapping("/artists")
+    public String registerArtist(@ModelAttribute @Validated Artist artists,
+                                 BindingResult result,
+                                 @RequestParam("artist_cover") MultipartFile cover,
+                                 Model model) throws IOException {
+        if (result.hasErrors()) {
+            return "registration";
+        }
+        artistService.save(artists, cover);
+        return "redirect:/artists";
+    }
 
-	@GetMapping("/artists/{id}/detail")
-	public String getMembers(@PathVariable("id") Integer artistId, Model model) {
-		var artist = artistService.findById(artistId);
-		model.addAttribute("artist", artist);
-		return "detail";
-	}
+    @GetMapping("/artists/{id}/detail")
+    public String getMembers(@PathVariable("id") Integer artistId, Model model) {
+        var artist = artistService.findById(artistId);
+        model.addAttribute("artist", artist);
+        return "detail";
+    }
 
-	@GetMapping("/artists/{id}/update")
-	public String updateArtist(@PathVariable("id") Integer artistid, Model model) {
-		var artist = artistService.findById(artistid);
-		model.addAttribute("artist", artist);
-		return "update";
-	}
+    @GetMapping("/artists/{id}/update")
+    public String updateArtist(@PathVariable("id") Integer artistid, Model model) {
+        var artist = artistService.findById(artistid);
+        model.addAttribute("artist", artist);
+        return "update";
+    }
 
-	@PostMapping("/artists/{id}/update")
-	public String update(@PathVariable("id") Integer id, @ModelAttribute("artist") @Validated Artist artist,
-			BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "update";
-		}
+    @PostMapping("/artists/{id}/update")
+    public String update(@PathVariable("id") Integer id,
+                         @ModelAttribute("artist") @Validated Artist artist,
+                         BindingResult result,
+                         @RequestParam("artist_cover") MultipartFile cover,
+                         Model model) throws IOException {
+        if (result.hasErrors()) {
+            return "update";
+        }
 
-		artist.setArtistId(id);
-		artistService.updateArtist(artist);
+        artist.setArtistId(id);
+        artistService.updateArtist(artist, cover);
 
-		return "redirect:/artists";
-	}
-	
-
-		
+        return "redirect:/artists";
+    }
 
 }
