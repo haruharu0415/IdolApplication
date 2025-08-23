@@ -8,8 +8,10 @@
 	<script th:src="@{/js/app.js}" defer></script>
 	<title>$title$</title>
 </head>
+
+<body>
 <h1>アーティスト登録</h1>
-<form th:method="post" th:action="@{/members}" th:object="${member}">
+<form th:method="post" th:action="@{/members}" th:object="${member}" enctype="multipart/form-data">
 	メンバー名<br/>
 	<input type="text" class="form-control" name="memberName"><br/>
 	<div class="fw-bold" th:if="${#fields.hasErrors('memberName')}" 
@@ -27,10 +29,13 @@
 		<option value="0"></option>
 		<option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
 	</select>
-</div>
+
+
+	写真<br>
+	<label class="col-form-label-sm fs-4">アーティスト写真</label>
+	<input type="file" class="form-control" name="member_cover" />
+	
 	<input type="submit" class="btn btn-secondary" value="登録する"><br/>
 </form>
-<body>
-
 </body>
 </html>

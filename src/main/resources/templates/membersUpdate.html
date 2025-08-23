@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>メンバー更新</h1>
-    <form th:method="post" th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" th:object="${member}">
+    <form th:method="post" th:action="@{/members/{id}/membersUpdate(id=${member.memberId})}" th:object="${member}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{memberId}" />
 
         <div>
@@ -37,6 +37,12 @@
                 <option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
             </select>
         </div>
+        
+        <div>
+			写真<br>
+			<label class="col-form-label-sm fs-4">アーティスト写真</label>
+			<input type="file" class="form-control" name="member_cover" />
+		</div>
 
         <br />
         <input type="submit" class="btn btn-secondary" value="更新" />

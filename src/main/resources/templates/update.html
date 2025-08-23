@@ -11,39 +11,43 @@
 </head>
 
 <body>
-	
-
 	<div class="text-center"><h1>アーティスト情報更新</h1></div>
 	
-	<div class="col-6 form-group">
-	<form th:method="post" th:action="@{/artists/{id}/update(id=${artist.artistId})}" th:object="${artist}">
-		<label class="col-form-label-sm fs-4">アーティスト名</label> 
+	
+	<form th:method="post" th:action="@{/artists/{id}/update(id=${artist.artistId})}" 
+	      th:object="${artist}" enctype="multipart/form-data">
+	      
 		<input type="hidden" class="form-control" th:field="*{artistId}" />
 
 		<div>
 			アーティスト名<br>
 			<input type="text" class="form-control" name="artistName" th:field="*{artistName}"/><br />
-			<div class="fw-bold" th:if="${#fields.hasErrors('artistName')}" th:errors="*{artistName}"
-				th:errorclass="err" style="color:red"></div>
+			<div class="fw-bold" th:if="${#fields.hasErrors('artistName')}" 
+			     th:errors="*{artistName}" th:errorclass="err" style="color:red"></div>
 		</div>
 
 		<div>
 			アーティスト名(読み)<br>
 			<input type="text" class="form-control" name="artistHiraganaName" th:field="*{artistHiraganaName}"/><br />
-			<div class="fw-bold" th:if="${#fields.hasErrors('artistHiraganaName')}" th:errors="*{artistHiraganaName}"
-				th:errorclass="err" style="color:red"></div>
+			<div class="fw-bold" th:if="${#fields.hasErrors('artistHiraganaName')}" 
+			     th:errors="*{artistHiraganaName}" th:errorclass="err" style="color:red"></div>
 		</div>
 
 		<div>
 			公式HP<br>
 			<input type="text" class="form-control" name="artistArtUrl" th:field="*{artistArtUrl}"/><br />
-			<div class="fw-bold" th:if="${#fields.hasErrors('artistArtUrl')}" th:errors="*{artistArtUrl}"
-				th:errorclass="err" style="color:red"></div>
+			<div class="fw-bold" th:if="${#fields.hasErrors('artistArtUrl')}" 
+			     th:errors="*{artistArtUrl}" th:errorclass="err" style="color:red"></div>
+		</div>
+		
+		<div>
+			写真<br>
+			<label class="col-form-label-sm fs-4">アーティスト写真</label>
+			<input type="file" class="form-control" name="artist_cover" />
 		</div>
 
-		<input type="submit" class="btn btn-secondary" value="更新" /><br />
+		<input type="submit" class="btn btn-secondary mt-3" value="更新" /><br />
 	</form>
-	</div>
 </body>
 
 </html>
