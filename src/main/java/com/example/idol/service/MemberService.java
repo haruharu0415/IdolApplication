@@ -52,19 +52,34 @@ public class MemberService {
 	}
 	
 	@Transactional
-	public Member updateMember(Member update) {
+	 public Member updateMember(Member update, MultipartFile file) throws IOException {
+        Member entity = memberRepository.findById(update.getArtistId())
+                .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
 
-		//DBからとってくる。
-	   Member entity = memberRepository.findById(update.getMemberId())
-			   .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
-	   //上書き
-	    entity.setMemberName(update.getMemberName());
-	    entity.setMemberHiraganaName(update.getMemberHiraganaName());
-	    entity.setMemberBirthday(update.getMemberBirthday());
-	    entity.setArtistId(update.getArtistId());
-	    
-	    //update
-	    return memberRepository.save(entity);
-	}
+        entity.setMemberName(update.getMemberName());
+        entity.setMemberHiraganaName(update.getMemberHiraganaName());
+
+        // ファイルが選択されている場合だけ処理
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = "static/images/"; 
+
+            String originalFilename = file.getOriginalFilename();
+            String filename = originalFilename;
+
+            int i = 1;
+            while (Files.exists(Paths.get(uploadDir, filename))) {
+                String name = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+                String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                filename = name + "(" + i + ")" + ext;
+                i++;
+            }
+
+            Files.write(Paths.get(uploadDir, filename), file.getBytes());
+
+            entity.setMemberPhoto("images/" + filename);
+        }
+
+        return memberRepository.save(entity);
+    }
 
 }

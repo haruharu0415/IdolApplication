@@ -64,15 +64,18 @@ public class MemberController {
     }
 
     @PostMapping("/members/{id}/membersUpdate")
-    public String update(@PathVariable("id") Integer id, @ModelAttribute("member") @Validated Member member,
-                         BindingResult result, Model model) {
+    public String update(@PathVariable("id") Integer id, 
+    					@ModelAttribute("member") @Validated Member member,
+                         BindingResult result,
+                         @RequestParam("member_cover") MultipartFile cover,
+                         Model model) throws IOException {
         if (result.hasErrors()) {
             model.addAttribute("artists", artistService.findAll());
             return "membersUpdate";
         }
 
         member.setMemberId(id);
-        memberService.updateMember(member);
+        memberService.updateMember(member,cover);
 
         return "redirect:/members";
     }
