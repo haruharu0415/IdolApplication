@@ -26,12 +26,26 @@ public class MemberService {
 		return memberRepository.findAll();
 	}
 
-	public void save(Member members,MultipartFile file) throws IOException{
-		String files = "static/images/" + file.getOriginalFilename();
-		Files.write(Paths.get(files),file.getBytes());
-		members.setMemberPhoto("images/" + file.getOriginalFilename());
-		memberRepository.save(members);
-	}
+	public void save(Member member, MultipartFile file) throws IOException {
+        String uploadDir = "static/images/"; 
+
+        String originalFilename = file.getOriginalFilename();
+        String filename = originalFilename;
+
+        int i = 1;
+        while (Files.exists(Paths.get(uploadDir, filename))) {
+            String name = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+            String ext = originalFilename.substring(originalFilename.lastIndexOf('.'));
+            filename = name + "(" + i + ")" + ext;
+            i++;
+        }
+
+        Files.write(Paths.get(uploadDir, filename), file.getBytes());
+
+        member.setMemberPhoto("images/" + filename);
+
+        memberRepository.save(member);
+    }
 	
 	public Member findById(Integer memberId){
 		return memberRepository.findById(memberId).orElseGet(Member::new);
