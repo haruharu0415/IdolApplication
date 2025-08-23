@@ -18,6 +18,7 @@ import com.example.idol.entity.Member;
 import com.example.idol.service.ArtistService;
 import com.example.idol.service.MemberService;
 
+//haru
 @Controller
 public class MemberController {
 
