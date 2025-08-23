@@ -28,6 +28,11 @@
 		<option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
 	</select>
 </div>
+
+写真<br>
+	<label class="col-form-label-sm fs-4">アーティスト写真</label>
+	<input type="file" class="form-control" name="member_cover" />
+	
 	<input type="submit" class="btn btn-secondary" value="登録する"><br/>
 </form>
 <body>
