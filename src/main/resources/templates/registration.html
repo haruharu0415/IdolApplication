@@ -9,7 +9,7 @@
 	<script th:src="@{/js/app.js}" defer></script>
 	<title>$title$</title>
 </head>
-
+<body>
 	<h1>アーティスト新規登録</h1>
 	<form th:method="post" th:action="@{/artists}" th:object="${artist}" enctype="multipart/form-data">
 	アーティスト名<br>
