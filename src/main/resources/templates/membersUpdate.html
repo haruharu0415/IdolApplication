@@ -33,7 +33,7 @@
 
         <div>
             所属グループ<br />
-            <select th:field="*{artistId}" class="form-select"/><br />
+            <select th:field="*{artistId}" class="form-select"><br />
                 <option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.artistName}"></option>
             </select>
         </div>

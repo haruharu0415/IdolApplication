@@ -70,7 +70,7 @@ public class MemberController {
                          @RequestParam("member_cover") MultipartFile cover,
                          Model model) throws IOException {
         if (result.hasErrors()) {
-            model.addAttribute("artists", artistService.findAll());
+            model.addAttribute("member", memberService.findAll());
             return "membersUpdate";
         }
 

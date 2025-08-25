@@ -53,11 +53,13 @@ public class MemberService {
 	
 	@Transactional
 	 public Member updateMember(Member update, MultipartFile file) throws IOException {
-        Member entity = memberRepository.findById(update.getArtistId())
+        Member entity = memberRepository.findById(update.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("存在しないアーティスト"));
 
         entity.setMemberName(update.getMemberName());
         entity.setMemberHiraganaName(update.getMemberHiraganaName());
+        entity.setMemberBirthday(update.getMemberBirthday());
+        entity.setArtistId(update.getArtistId());
 
         // ファイルが選択されている場合だけ処理
         if (file != null && !file.isEmpty()) {
