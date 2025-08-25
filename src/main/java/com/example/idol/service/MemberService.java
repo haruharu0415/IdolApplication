@@ -58,6 +58,7 @@ public class MemberService {
 
         entity.setMemberName(update.getMemberName());
         entity.setMemberHiraganaName(update.getMemberHiraganaName());
+        entity.setMemberBirthday(update.getMemberBirthday());
 
         // ファイルが選択されている場合だけ処理
         if (file != null && !file.isEmpty()) {
