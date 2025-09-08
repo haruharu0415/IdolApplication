@@ -20,7 +20,8 @@ import com.example.idol.service.ArtistService;
 
 @Controller
 public class ArtistController {
-
+    //ここの処理はインジェクションする処理
+    //コンストラクタでインジェクションすることによって、final修飾子を付けることが出来る
     private final ArtistService artistService;
 
     @Autowired
