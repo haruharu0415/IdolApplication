@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.idol.entity.Artist;
 import com.example.idol.service.ArtistService;
-
+//ステレオタイプアノテーションを付けることにより、DIコンテナが検知してくれる
 @Controller
 public class ArtistController {
     //ここの処理はインジェクションする処理
